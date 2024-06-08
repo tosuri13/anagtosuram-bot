@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Timeout: 300
+    MemorySize: 128
+
+Resources:
+  AnagtosuramBotFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      EventInvokeConfig:
+        MaximumRetryAttempts: 0
+      Events:
+        AnagtosuramBotScheduleEvent:
+          Type: Schedule
+          Properties:
+            Schedule: "cron(50 23 ? * * *)"
+            Name: anagtosuram-bot-rule
+      FunctionName: anagtosuram-bot-function
+      Handler: anagtosuram_bot.function.main.handler
+      Role: !GetAtt AnagtosuramBotFunctionRole.Arn
+      Runtime: python3.10
+
+  AnagtosuramBotFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: anagtosuram-bot-function-policy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 
+                  - ssm:GetParameter
+                Resource: "*"
+      RoleName: anagtosuram-bot-function-role

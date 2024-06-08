@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "anagtosuram-bot"
+version = "0.1.0"
+description = ""
+authors = ["tosuri13 <85057870+tosuri13@users.noreply.github.com>"]
+readme = "README.md"
+packages = [
+  { include = "src" }, 
+  { include = "anagtosuram_bot", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.32.3"
+boto3 = "^1.34.122"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+build = { shell = "poetry export --without-hashes -o src/requirements.txt && sam build" }
+deploy = { shell = "sam deploy" }
