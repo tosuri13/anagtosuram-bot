@@ -22,7 +22,7 @@ Resources:
       FunctionName: anagtosuram-bot-function
       Handler: anagtosuram_bot.function.main.handler
       Role: !GetAtt AnagtosuramBotFunctionRole.Arn
-      Runtime: python3.10
+      Runtime: python3.12
 
   AnagtosuramBotFunctionRole:
     Type: AWS::IAM::Role
