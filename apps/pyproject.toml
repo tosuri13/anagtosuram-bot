@@ -1,0 +1,7 @@
+[project]
+name = "anagtosuram-bot-app"
+version = "1.0.0"
+requires-python = ">=3.14"
+dependencies = [
+    "anagtosuram>=1.0.0",
+]

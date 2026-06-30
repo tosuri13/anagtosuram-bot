@@ -1,17 +1,27 @@
 [project]
-name = "anagtosuram-bot"
-version = "0.1.0"
-description = ""
+name = "anagtosuram-bot-workspace"
+version = "1.0.0"
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "boto3>=1.36.11",
-    "requests>=2.32.3",
+requires-python = ">=3.14"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.20",
+    "ty>=0.0.55",
 ]
 
-[tool.hatch.build.targets.wheel]
-packages = ["src", "src/anagtosuram_bot"]
+[tool.uv.sources]
+anagtosuram = { workspace = true }
 
-[tool.taskipy.tasks]
-build = "uv pip compile pyproject.toml > src/requirements.txt && sam build"
-deploy = "sam deploy"
+[tool.uv.workspace]
+members = [
+    "apps",
+    "libs/anagtosuram",
+    "libs/anagtosuram-cdk",
+]
+
+[tool.ruff.lint]
+unfixable = [
+    "F401", # unused import
+    "F841", # unused variable
+]
