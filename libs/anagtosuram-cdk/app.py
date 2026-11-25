@@ -1,5 +1,4 @@
 import aws_cdk as cdk
-
 from stacks.app import AnagtosuramBotAppStack
 
 app = cdk.App()

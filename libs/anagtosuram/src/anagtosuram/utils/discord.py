@@ -1,5 +1,4 @@
 import requests
-
 from anagtosuram.config import Config
 
 
