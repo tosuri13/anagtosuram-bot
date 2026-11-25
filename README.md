@@ -27,3 +27,9 @@ SOURCE_TEXT=<並べ替えたい文字列>
 ```bash
 $ make deploy
 ```
+
+作成したリソースを削除する場合は、以下のコマンドを入力します。
+
+```bash
+$ make destroy
+```

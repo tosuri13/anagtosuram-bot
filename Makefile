@@ -1,4 +1,4 @@
-.PHONY: deploy bundle
+.PHONY: deploy destroy bundle
 
 bundle:
 	@echo "📦 Bundling Zip Lambda functions..."
@@ -17,3 +17,7 @@ bundle:
 deploy: bundle
 	@echo "🚀 Deploying CDK stack..."
 	cd libs/anagtosuram-cdk && cdk deploy
+
+destroy: bundle
+	@echo "🔥 Destroying CDK stack..."
+	cd libs/anagtosuram-cdk && cdk destroy
