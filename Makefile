@@ -1,18 +1,26 @@
-.PHONY: deploy destroy bundle
+FUNCTIONS := $(notdir $(wildcard apps/functions/*))
 
-bundle:
-	@echo "📦 Bundling Zip Lambda functions..."
-	rm -rf dist/shuffle
-	uv export --package anagtosuram-bot-app --frozen --no-emit-workspace --no-dev --no-editable -o /tmp/requirements.txt
+.PHONY: deploy destroy bundle requirements $(addprefix bundle-,$(FUNCTIONS))
+
+requirements:
+	@echo "📦 Exporting requirements..."
+	mkdir -p dist
+	uv export --package anagtosuram-bot-app --frozen --no-emit-workspace --no-dev --no-editable -o dist/requirements.txt
+
+bundle: $(addprefix bundle-,$(FUNCTIONS))
+
+$(addprefix bundle-,$(FUNCTIONS)): bundle-%: requirements
+	@echo "📦 Bundling $*..."
+	rm -rf dist/$*
 	uv pip install \
 		--no-installer-metadata \
 		--no-compile-bytecode \
 		--python-platform aarch64-manylinux2014 \
 		--python 3.14 \
-		--target dist/shuffle \
-		-r /tmp/requirements.txt
-	cp -r libs/anagtosuram/src/anagtosuram dist/shuffle/anagtosuram
-	cp apps/functions/shuffle/function.py dist/shuffle/
+		--target dist/$* \
+		-r dist/requirements.txt
+	cp -r libs/anagtosuram/src/anagtosuram dist/$*/anagtosuram
+	cp -r apps/functions/$*/. dist/$*/
 
 deploy: bundle
 	@echo "🚀 Deploying CDK stack..."
