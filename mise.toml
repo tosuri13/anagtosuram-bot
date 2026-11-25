@@ -1,0 +1,7 @@
+[tools]
+node = "24"
+uv = "latest"
+"npm:aws-cdk" = "latest"
+
+[env]
+_.file = ".env"

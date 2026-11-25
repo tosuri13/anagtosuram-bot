@@ -8,7 +8,13 @@ uv + AWS CDK構成で作成されています。
 
 ## Build & Deploy
 
-Discord Developer Portalから新しいApplicationsを作成し、下記を参考に`.env`ファイルを作成してください。
+[mise](https://mise.jdx.dev/)をインストールし、必要なツール(Node.js / uv / AWS CDK)を導入してください。
+
+```bash
+$ mise install
+```
+
+Discord Developer Portalから新しいApplicationsを作成し、下記を参考にリポジトリ直下に`.env`ファイルを作成してください(miseが自動で読み込みます)。
 
 ```
 DISCORD_BOT_TOKEN=<Discord Botのトークン>
